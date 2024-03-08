@@ -18,4 +18,6 @@ repositories {
 
 dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("org.springframework:spring-context:6.1.4")
+    implementation("org.springframework:spring-webmvc:6.1.4")
 }

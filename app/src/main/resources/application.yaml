@@ -1,5 +1,8 @@
 ---
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
   main:
     banner-mode: off
   datasource:
