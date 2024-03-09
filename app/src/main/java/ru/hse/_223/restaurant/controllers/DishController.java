@@ -29,20 +29,34 @@ public class DishController implements DishApi {
 
     @Override
     @PostMapping(path = "/add")
-    public String addDish(Dish dish, RedirectAttributes redirectAttributes) {
-        System.out.println("CALLED ADDDISH");
+    public String addDish(Dish dish, Model model) {
         try{
             dishService.addDish(dish);
-            System.out.println("TIME: " + dish.getCookingTime());
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return handleError(e.getMessage(), model);
         }
         return "redirect:/dishes/getAllDishes";
     }
 
     @Override
     @PostMapping(path = "/delete")
-    public String deleteDish(int id) {
-        return "";
+    public String deleteDish(String name, Model model) {
+        try {
+            dishService.deleteDish(name);
+        } catch (Exception e) {
+            return handleError(e.getMessage(), model);
+        }
+        return "redirect:/dishes/getAllDishes";
+    }
+    @Override
+    @GetMapping(path = "/delete")
+    public String deleteDish() {
+        return "deleteDish";
+    }
+
+    @GetMapping(path = "/error")
+    private String handleError(String err, Model model) {
+        model.addAttribute("occurred_error", err);
+        return "ErrorPage";
     }
 }

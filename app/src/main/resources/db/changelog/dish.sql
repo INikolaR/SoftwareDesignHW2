@@ -10,7 +10,7 @@ create table dish (
 --changeset nikola:2
 insert into dish (name, amount, price, cooking_time)
 values
-    ('Fired potatoes', 5, 100.00, 60),
+    ('Fried potatoes', 5, 100.00, 60),
     ('Borsch', 3, 200.00, 30),
     ('Steak', 10, 500.00, 10),
     ('Pizza', 12, 300.00, 60);
