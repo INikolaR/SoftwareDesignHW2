@@ -3,6 +3,7 @@ package ru.hse._223.restaurant.services;
 import org.springframework.stereotype.Service;
 import ru.hse._223.restaurant.data.Order;
 import ru.hse._223.restaurant.data.enums.OrderStatus;
+import ru.hse._223.restaurant.exceptions.OrderException;
 import ru.hse._223.restaurant.mappers.OrderMapper;
 
 import java.util.ArrayList;
@@ -31,7 +32,12 @@ public class OrderServiceImpl implements OrderService {
                         System.out.println("EXCEPTION OCCURRED");
                     }
                 }
-                currentOrder.setOrderStatus(OrderStatus.FINISHED);
+                if (currentOrder.getRemainingTime() < 0) {
+                    currentOrder.setOrderStatus(OrderStatus.CANCELLED);
+                    currentOrder.setRemainingTime(0);
+                } else {
+                    currentOrder.setOrderStatus(OrderStatus.FINISHED);
+                }
             }
         }
     }
@@ -57,9 +63,36 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream().map(orderMapper::mapDataToDto).collect(Collectors.toList());
     }
 
-    public void addOrder(ru.hse._223.restaurant.api.dto.Order order) {
-        Order dataOrder = new Order(currOrderId++, order.getUserName(), order.getTime(), order.getPrice(), OrderStatus.CREATED);
+    public void addOrder(CartService cartService) throws OrderException{
+        if (cartService.isCartEmpty()) {
+            throw new OrderException("Order is empty");
+        }
+        Order dataOrder = new Order(currOrderId++, "user", cartService.getTotalTime(), cartService.getTotalPrice(), OrderStatus.CREATED);
+        cartService.clear();
         orders.add(dataOrder);
         queueOrders.add(dataOrder);
+    }
+
+    public void cancelOrder(int orderId) throws OrderException{
+        if (orders.stream().noneMatch(o -> o.getId() == orderId)) {
+            throw new OrderException("No such order");
+        }
+        Order order = orders.stream().filter(o -> o.getId() == orderId).toList().get(0);
+        if (order.getOrderStatus() == OrderStatus.PAYED) {
+            throw new OrderException("Order has been payed, cannot cancel");
+        }
+        order.setRemainingTime(-1);
+        order.setOrderStatus(OrderStatus.CANCELLED);
+    }
+
+    public void payOrder(int orderId) throws OrderException {
+        if (orders.stream().noneMatch(o -> o.getId() == orderId)) {
+            throw new OrderException("No such order");
+        }
+        Order order = orders.stream().filter(o -> o.getId() == orderId).toList().get(0);
+        if (order.getOrderStatus() != OrderStatus.FINISHED) {
+            throw new OrderException("Order is not finished yet");
+        }
+        order.setOrderStatus(OrderStatus.PAYED);
     }
 }

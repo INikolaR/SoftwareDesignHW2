@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>WELCOME</title>
+    <title>ERROR</title>
 </head>
 <body>
-I am:
-<p><a href = "/user.html">User</a></p>
-<p><a href = "/admin.html">Admin</a></p>
 
+<p>An error occurred: <span th:text = "${occurred_error}"></span></p>
+<p><a href = "/cart">Back</a></p>
 </body>
 </html>

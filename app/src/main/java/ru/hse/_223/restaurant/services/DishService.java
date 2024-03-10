@@ -9,4 +9,6 @@ public interface DishService {
     List<Dish> getAllDishes();
     void addDish(Dish dish) throws DishException;
     void deleteDish(String name) throws DishException;
+    Dish getDishByName(String name) throws DishException;
+    void decreaseDishAmount(String name) throws DishException;
 }

@@ -2,6 +2,7 @@ package ru.hse._223.restaurant.api.dto;
 
 import lombok.*;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @Data

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.hse._223.restaurant.api.DishApi;
 import ru.hse._223.restaurant.api.dto.Dish;
 import org.springframework.ui.Model;
@@ -29,6 +28,14 @@ public class DishController implements DishApi {
     }
 
     @Override
+    @GetMapping(path = "/getAllDishesAdmin")
+    public String getAllDishesAdmin(Model model) {
+        List<Dish> dishes = dishService.getAllDishes();
+        model.addAttribute("dishes", dishes);
+        return "adminMenu";
+    }
+
+    @Override
     @PostMapping(path = "/add")
     public String addDish(Dish dish, Model model) {
         try{
@@ -36,7 +43,7 @@ public class DishController implements DishApi {
         } catch (Exception e) {
             return handleError(e.getMessage(), model);
         }
-        return "redirect:/dishes/getAllDishes";
+        return "redirect:/dishes/getAllDishesAdmin";
     }
 
     @Override
@@ -47,15 +54,21 @@ public class DishController implements DishApi {
         } catch (Exception e) {
             return handleError(e.getMessage(), model);
         }
-        return "redirect:/dishes/getAllDishes";
-    }
-    @Override
-    @GetMapping(path = "/delete")
-    public String deleteDish() {
-        return "deleteDish";
+        return "redirect:/dishes/getAllDishesAdmin";
     }
 
-    @GetMapping(path = "/error")
+    @Override
+    @PostMapping(path = "/edit")
+    public String editDish(Dish dish, Model model) {
+        try {
+            dishService.deleteDish(dish.getName());
+            dishService.addDish(dish);
+        } catch (Exception e) {
+            return handleError(e.getMessage(), model);
+        }
+        return "redirect:/dishes/getAllDishesAdmin";
+    }
+
     private String handleError(String err, Model model) {
         model.addAttribute("occurred_error", err);
         return "ErrorPage";

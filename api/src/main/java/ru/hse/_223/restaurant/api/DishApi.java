@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface DishApi {
     public String getAllDishes(Model model);
+    String getAllDishesAdmin(Model model);
     public String addDish(Dish dish, Model model);
     public String deleteDish(String name, Model model);
-    public String deleteDish();
+    public String editDish(Dish dish, Model model);
 }

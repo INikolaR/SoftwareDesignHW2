@@ -10,14 +10,10 @@
 <form id="deleteDishForm" action="/dishes/delete" method="post">
     <label for="name">The name of the dish:</label>
     <input type="text" name="name" id="name"><br><br>
-    <!--    <input type="hidden" name="_csrf" value="${_csrf.token}">-->
     <input type="submit" value="Delete dish">
 </form>
-<div class="alert alert-success" role="alert"
-     th:if="${errorMessage}"><span th:text="${errorMessage}"></span><button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
-</div>
 
-<p><a href = "../static/index.html">back</a></p>
+<p><a href = "index.html">back</a></p>
 
 </body>
 </html>

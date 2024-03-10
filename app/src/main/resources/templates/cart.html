@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+CART CONTENT:<br>
+<div th:each="dish : ${dishes}">
+    <p>Name: <span th:text = "${dish.name}"></span>; time: <span th:text = "${dish.cookingTime}"></span>s; price: <span th:text = "${dish.price}"></span></p>
+</div><br>
+<a>Total time: <span th:text = "${totalTime}"></span>s</a><br>
+<a>Total price: <span th:text = "${totalPrice}"></span></a><br><br><br>
+
+MENU:<br>
+<div th:each="menuDish : ${menuDishes}">
+    <p>Name: <span th:text = "${menuDish.name}"></span>; time: <span th:text = "${menuDish.cookingTime}"></span>s; quantity: <span th:text = "${menuDish.amount}"></span></p>
+</div><br><br>
+
+<form id="addDishForm" action="/cart" method="post">
+    <label for="name">Name of dish:</label>
+    <input type="text" name="name" id="name"><br><br>
+    <input type="submit" value="Add dish">
+</form><br><br><br>
+
+<form id="newOrderForm" action="/orders/add" method="post"><input type="submit" value="MAKE ORDER"></form>
+
+<p><a href = "/user.html">Back</a></p>
+
+
+</body>
+</html>
