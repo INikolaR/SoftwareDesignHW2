@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME</title>
+</head>
+<body>
+
+<form id="addDishForm" action="/dishes/edit" method="post">
+    <label for="name">The name of the dish:</label>
+    <input type="text" name="name" id="name"><br><br>
+    <label for="price">New price:</label>
+    <input type="number" name="price" id="price" min="0" max="999999999"><br><br>
+    <label for="cookingTime">New cooking time in seconds:</label>
+    <input type="number" name="cookingTime" id="cookingTime" min="0" max="999999999"><br><br>
+    <label for="amount">New amount:</label>
+    <input type="number" name="amount" id="amount"  min="0" max="999999999"><br><br>
+    <input type="submit" value="Edit dish">
+</form>
+
+<p><a href = "index.html">back</a></p>
+
+</body>
+</html>

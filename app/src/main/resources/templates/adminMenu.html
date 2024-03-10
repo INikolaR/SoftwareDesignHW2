@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+MENU:<br>
+<div th:each="dish : ${dishes}">
+    <p>Name: <span th:text = "${dish.name}"></span>; time: <span th:text = "${dish.cookingTime}"></span>s; quantity: <span th:text = "${dish.amount}"></span></p>
+</div>
+
+<p><a href = "/admin.html">back</a></p>
+
+
+</body>
+</html>
