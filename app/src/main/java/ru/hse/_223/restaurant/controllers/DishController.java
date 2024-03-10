@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.hse._223.restaurant.api.DishApi;
 import ru.hse._223.restaurant.api.dto.Dish;
 import org.springframework.ui.Model;
+import ru.hse._223.restaurant.api.dto.Order;
 import ru.hse._223.restaurant.services.DishService;
 
 import java.util.List;
@@ -58,5 +59,11 @@ public class DishController implements DishApi {
     private String handleError(String err, Model model) {
         model.addAttribute("occurred_error", err);
         return "ErrorPage";
+    }
+
+    @PostMapping(path = "/addOrder")
+    public String addOrder(Order order, Model model) {
+        System.out.println(order.getUserName());
+        return "redirect:/orders/getAllOrders";
     }
 }
